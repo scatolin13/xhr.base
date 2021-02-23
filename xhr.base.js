@@ -1,13 +1,13 @@
 var XHR = new function () {
-    var notificationAjax = function (res, callback) {
-        if (res) {
+    var notificationAjax = function (data, callback) {
+        if (data) {
             if (callback){
-                callback(res);
+                callback(data);
             }
         } else {
             Swal.fire({
                 title: "Fail",
-                html: res ? res : "Call don't return result",
+                html: data ? data : "Call don't return result",
                 type: 'error',
                 allowOutsideClick: false
             });
@@ -23,14 +23,14 @@ var XHR = new function () {
             data: (prms) ? JSON.stringify(prms) : null,
             async: true
         })
-            .done(function (res) {
-                notificationAjax(res.d, callback);
+            .done(function (data) {
+                notificationAjax(data.d, callback);
             })
-            .fail(function(res){
-                failed(res);
+            .fail(function(data){
+                failed(data);
             })
-            .always(function(){
-                always();
+            .always(function(dataOrjqXHR, textStatus, jqXHRorErrorThrown){
+                always(dataOrjqXHR, textStatus, jqXHRorErrorThrown);
             });
     };
 }
